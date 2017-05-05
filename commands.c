@@ -16,17 +16,18 @@ AddressBookList * commandLoad(char * fileName)
 
      FILE *data;
      printf("> Loading the file ... \n");
-     if((data = fileopen(fileName, "r"))!=-1) {
-    char parsedLine[50];
-    while (fgets(parsedLine, 50, data) != NULL) {
-    char *getId = strtok(parsedLine, ", ");
-    char *getName = strtok(NULL, ", ");
-    char *getTelephone = strtok(NULL, ", ");
-}
-fclose(data);
-} else {
-  printf("> Error: The specified file is in the wrong format and cannot be loaded.\n");
-}
+     if((data = fopen(fileName, "r"))!=-1) {
+    	char parsedLine[50];
+    	while (fgets(parsedLine, 50, data) != NULL) {
+    			char *getId = strtok(parsedLine, ", ");
+    			char *getName = strtok(NULL, ", ");
+    			char *getTelephone = strtok(NULL, ", ");
+			printf("%s - %s - %s \n",getId,getName,getTelephone);
+		}
+	fclose(data);
+    } else {
+ 	 printf("> Error: The specified file is in the wrong format and cannot be loaded.\n");
+	}
     return NULL;
 }
 

@@ -14,7 +14,7 @@ int string_num = 0;
 int word_size = 0;
 int msg_index = 0;
 int x;
-AddressBookList a;
+AddressBookList *a;
 int main(int argc, char ** argv)
 {
   /** ----------------------------Format-------------------------------
@@ -32,7 +32,10 @@ int main(int argc, char ** argv)
     do
     {
       printf("Enter your command : ");
-      scanf("%[^\n]",msg);
+      scanf("%[^\n] ",msg);
+	string_num=0;
+	word_size=0;
+	msg_index=0;
       while (msg[msg_index] != '\0') {
         if (msg[msg_index] != ' ') {
             /* add the character to the proper place in array_of_string */
@@ -47,8 +50,9 @@ int main(int argc, char ** argv)
             string_num++; /* needs check for reserved number of "strings" (10) */
             word_size = 0;
         }
+	msg_index++;
     }
-        if(strcmp(array_of_string[0],COMMAND_LOAD)) {
+        if(strcmp(array_of_string[0],COMMAND_LOAD)==0) {
             printf("> Opening the file %s\n",array_of_string[1]);
             printf("%s\n",array_of_string[1]);
             a = commandLoad(array_of_string[1]);
