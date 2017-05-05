@@ -9,11 +9,27 @@ AddressBookList * commandLoad(char * fileName)
 {
     /**
      * Loads the given file and returns a new AddressBookList.
-     * 
+     *
      * If the file doesn't exist or corruption is found in the file
      * then NULL is returned.
      */
 
+     FILE *data;
+     printf("> Loading the file ... \n");
+     if((data = fileopen(fileName, "r"))!=-1) {
+    char parsedLine[50];
+    while (fgets(parsedLine, 50, data) != NULL) {
+    struct NODE *node = malloc(sizeof(struct NODE));
+    char *getId = strtok(parsedLine, ", ");
+    char *getName = strtok(NULL, ", ");
+    char *getTelephone = strtok(NULL, ", ");
+    // node->next = head;
+    // head = node;
+}
+fclose(data);
+} else {
+  printf("> Error: The specified file is in the wrong format and cannot be loaded.\n");
+}
     return NULL;
 }
 
@@ -56,7 +72,7 @@ void commandSort(
 int compareName(const void * node, const void * otherNode)
 {
     /* Compare node name with otherNode name.
-     * 
+     *
      * return < 0 when node name is smaller than otherNode name.
      * return 0 when the names are equal.
      * return > 0 when node name is bigger than otherNode name.
@@ -67,7 +83,7 @@ int compareName(const void * node, const void * otherNode)
 int compareID(const void * node, const void * otherNode)
 {
     /* Compare node id with otherNode id.
-     * 
+     *
      * return < 0 when node id is smaller than otherNode id.
      * return 0 when the ids are equal.
      * return > 0 when node id is bigger than otherNode id.
