@@ -19,12 +19,9 @@ AddressBookList * commandLoad(char * fileName)
      if((data = fileopen(fileName, "r"))!=-1) {
     char parsedLine[50];
     while (fgets(parsedLine, 50, data) != NULL) {
-    struct NODE *node = malloc(sizeof(struct NODE));
     char *getId = strtok(parsedLine, ", ");
     char *getName = strtok(NULL, ", ");
     char *getTelephone = strtok(NULL, ", ");
-    // node->next = head;
-    // head = node;
 }
 fclose(data);
 } else {

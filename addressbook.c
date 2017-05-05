@@ -9,17 +9,18 @@
 */
 char line [128];
 char *pch;
-char words[6][20]; // 6 words, 20 characters
+char words[6][20]; 
 int x;
 AddressBookList a;
 int main(int argc, char ** argv)
 {
-    // ----------------------------Format-------------------------------
-    // -----------------------------------------------------------------
-    // Student name: Firstname Lastname
-    // Student number: 1234567
-    // Advanced Programming Techniques, Assignment Two, Semester 1, 2017
-    // -----------------------------------------------------------------
+  /** ----------------------------Format-------------------------------
+    * -----------------------------------------------------------------
+    * Student name: Firstname Lastname
+    * Student number: 1234567
+    * Advanced Programming Techniques, Assignment Two, Semester 1, 2017
+    * -----------------------------------------------------------------
+  */
     printf("-----------------------------------------------------------------\n");
     printf("Student name: Ashish John\n");
     printf("Student number: s3624455\n");
@@ -46,7 +47,7 @@ int main(int argc, char ** argv)
         if(strcmp(words[0],COMMAND_LOAD) {
             printf("> Opening the file %s\n",words[1]);
             printf("%s\n",words[1]);
-            //  a = commandLoad(words[1]);
+            a = commandLoad(words[1]);
         }
     } while(words[0] != NULL && strcmp(words[0],COMMAND_QUIT));
     printf("> Goodbye. \n\n");
