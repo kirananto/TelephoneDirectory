@@ -7,9 +7,12 @@
 * After the user enters a command, then the corresponding function is to be
 * called from commands.c, e.g., "forward" corresponds to "commandForward(...)".
 */
-char line [128];
-char *pch;
-char words[6][20]; 
+char array_of_string[10][6]; /* 10 strings of a maximum of 5 characters each, plus the NUL */
+char msg[50];
+/* now split the msg and put the words in array_of_string */
+int string_num = 0;
+int word_size = 0;
+int msg_index = 0;
 int x;
 AddressBookList a;
 int main(int argc, char ** argv)
@@ -29,27 +32,28 @@ int main(int argc, char ** argv)
     do
     {
       printf("Enter your command : ");
-      while ( fgets ( line, sizeof line, file ) != NULL ) /* read a line */
-        {
-           pch = strtok (line," ");
-           while (pch != NULL)
-           {
-              strcpy(words[x], pch);
-              pch = strtok (NULL, " ");
-           }
-           x++;
-
-          /*
-             At this point, the array "words" has all the words in the line
-           */
-
+      scanf("%[^\n]",msg);
+      while (msg[msg_index] != '\0') {
+        if (msg[msg_index] != ' ') {
+            /* add the character to the proper place in array_of_string */
+            array_of_string[string_num][word_size] = msg[msg_index];
+            /* and update word_size for next time through the loop */
+            word_size++; /* needs check for reserved word size (5) */
+        } else {
+            /* a space! */
+            /* first, terminate the current word */
+            array_of_string[string_num][word_size] = '\0';
+            /* prepare to start the next word */
+            string_num++; /* needs check for reserved number of "strings" (10) */
+            word_size = 0;
         }
-        if(strcmp(words[0],COMMAND_LOAD) {
-            printf("> Opening the file %s\n",words[1]);
-            printf("%s\n",words[1]);
-            a = commandLoad(words[1]);
+    }
+        if(strcmp(array_of_string[0],COMMAND_LOAD)) {
+            printf("> Opening the file %s\n",array_of_string[1]);
+            printf("%s\n",array_of_string[1]);
+            a = commandLoad(array_of_string[1]);
         }
-    } while(words[0] != NULL && strcmp(words[0],COMMAND_QUIT));
+    } while(array_of_string[0] != NULL && strcmp(array_of_string[0],COMMAND_QUIT));
     printf("> Goodbye. \n\n");
     return EXIT_SUCCESS;
 }
