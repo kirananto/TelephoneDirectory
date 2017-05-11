@@ -13,28 +13,34 @@ AddressBookList * commandLoad(char * fileName)
      * If the file doesn't exist or corruption is found in the file
      * then NULL is returned.
      */
-
+     int i, j;
      FILE *data;
      printf("> Loading the file ... \n");
-     if((data = fopen(fileName, "r"))!=-1) {
-    	char parsedLine[100];
-    	while (fgets(parsedLine, 140, data) != NULL) {
-    			if(parsedLine[0]=='#')
+     if((data = fopen(fileName, "r"))) {
+    	char parsedLine[MAX_LINE_LENGTH];
+    	while (fgets(parsedLine, MAX_LINE_LENGTH, data) != NULL) {
+    		if(parsedLine[0]=='#')
 			{
-			   continue;
+			    continue;
 			} else
 			{
 				char *getId = strtok(parsedLine, ", ");
-    				char *getName = strtok(NULL, ", ");
-				char *getTelephone = strtok(NULL,", ");
-				/*int i=0;
-    				while(((*getTelephone)[i] = strtok(NULL, ", "))!=-1)
-				i++;*/
-			printf("%s - %s - %s \n",getId,getName,getTelephone);
-		}}
+    			char *getName = strtok(NULL, ", ");
+				char *getTelephone[20];
+                i = 0;
+    			while((getTelephone[i] = strtok(NULL, ", ")) != NULL)
+                        i++;
+			printf("%s - %s\n",getId,getName);
+            for(j = 0; j <i ; j++)
+            {
+                printf(" - %s\n", getTelephone[j]);
+            }
+		}
+    }
 	fclose(data);
     } else {
- 	 printf("> Error: The specified file is in the wrong format and cannot be loaded.\n");
+ 	 /*printf("> Error: The specified file is in the wrong format and cannot be loaded.\n");*/
+     printf("> Error: File not found\n");
 	}
     return NULL;
 }
