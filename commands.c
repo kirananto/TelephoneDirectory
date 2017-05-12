@@ -13,32 +13,60 @@ AddressBookList * commandLoad(char * fileName)
      * If the file doesn't exist or corruption is found in the file
      * then NULL is returned.
      */
+
     int i, j;
     FILE *data;
     printf("> Loading the file ... \n");
     if((data = fopen(fileName, "r")))
     {
-        char parsedLine[MAX_LINE_LENGTH];
-        while (fgets(parsedLine, MAX_LINE_LENGTH, data) != NULL)
+        AddressBookList *abl;
+        AddressBookNode *abn;
+        if((abl = createAddressBookList()))
         {
-            if(parsedLine[0]=='#')
-                continue;
-            else
+            char parsedLine[MAX_LINE_LENGTH];
+            while (fgets(parsedLine, MAX_LINE_LENGTH, data) != NULL)
             {
-                char *getId = strtok(parsedLine, ", ");
-                char *getName = strtok(NULL, ", ");
-                char *getTelephone[20];
-                i = 0;
-                while((getTelephone[i] = strtok(NULL, ", ")) != NULL)
-                    i++;
-                printf("%s - %s\n",getId,getName);
-                for(j = 0; j <i ; j++)
+                if(parsedLine[0]=='#')
+                    continue;
+                else
                 {
-                    printf(" - %s\n", getTelephone[j]);
+                    char *getId = strtok(parsedLine, ", ");
+                    char *getName = strtok(NULL, ", ");
+                    char *getTelephone[20];
+                    i = 0;
+                    while((getTelephone[i] = strtok(NULL, ", ")) != NULL)
+                        i++;
+                    /* printf("%s - %s\n",getId,getName);
+                    for(j = 0; j <i ; j++)
+                    {
+                        printf(" - %s\n", getTelephone[j]);
+                    } */
+                    if((abn = createAddressBookNode(atoi(getId), getName)))
+                    {
+                        for(j = 0; j <i ; j++)
+                        {
+                            addTelephone(abn -> array, getTelephone[j]);
+                        }
+                        insertNode(abl, abn);
+                    }
                 }
             }
+            fclose(data);
+            /* printf("\n\nFROM STRUCTURE OBJECT\n\n"); */
+            abl -> current = abl -> head; /* Printing all data from AddressBookList object */
+            while((abn = abl -> current))
+            {
+                printf("%d - %s\n", abn -> id, abn -> name);
+                for(j = 0; j < (abn -> array -> size) ; j++)
+                {
+                    printf(" - %s\n", abn -> array -> telephones[j]);
+                }
+                abl -> current = abl -> current -> nextNode;
+            }
+            return abl;
         }
         fclose(data);
+        return NULL;
     }
     else
     {

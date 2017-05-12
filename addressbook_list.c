@@ -17,6 +17,13 @@ AddressBookList * createAddressBookList()
     * Note head, tail and current should all be initialised to NULL.
     */
 
+    AddressBookList *abl;
+    if((abl = malloc(sizeof(AddressBookList))))
+    {
+       abl -> size = 0;
+       abl -> head = abl -> tail = abl -> current = NULL;
+       return abl;
+    }
     return NULL;
 }
 
@@ -44,6 +51,17 @@ AddressBookNode * createAddressBookNode(int id, char * name)
     * Note previousNode and nextNode should both be initialised to NULL.
     */
 
+    AddressBookNode *abn;
+    if((abn = malloc(sizeof(AddressBookNode))))
+    {
+       abn -> id = id;
+       strcpy(abn -> name, name);
+       if((abn -> array = createAddressBookArray()))
+       {
+            abn -> previousNode = abn -> nextNode = NULL;
+            return abn;
+       }
+    }
     return NULL;
 }
 
@@ -65,6 +83,20 @@ Boolean insertNode(AddressBookList * list, AddressBookNode * node)
      * then FALSE is returned and the node is not inserted.
      */
 
+    /* TODO - Check if node with same id exists */
+    if(list -> head == NULL)
+    {
+        list -> head = list -> tail = list -> current = node;
+        node -> previousNode = node -> nextNode = NULL;
+        return TRUE;
+    }
+    else
+    {
+        list -> tail -> nextNode = node;
+        node -> previousNode = list -> tail;
+        list -> tail = list -> tail -> nextNode;
+        return TRUE;
+    }
     return FALSE;
 }
 
