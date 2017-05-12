@@ -13,7 +13,7 @@ AddressBookList * commandLoad(char * fileName)
      * If the file doesn't exist or corruption is found in the file
      * then NULL is returned.
      */
-    
+
     int i, j;
     FILE *data;
     printf("> Loading the file ... \n");
