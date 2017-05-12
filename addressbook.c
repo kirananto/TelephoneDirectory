@@ -29,6 +29,10 @@ int main(int argc, char ** argv)
     printf("Student number: s3624455\n");
     printf("Advanced Programming Techniques, Assignment Two, Semester 1, 2017\n");
     printf("----------------------------------------------------------------- \n");
+    if(argc == 2)
+    {
+        a = commandLoad(argv[1]);
+    }
     do
     {
       printf("Enter your command : ");

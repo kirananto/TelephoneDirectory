@@ -17,6 +17,13 @@ AddressBookArray * createAddressBookArray()
      * Note telephones should be initialised to NULL.
      */
 
+    AddressBookArray *a;
+    if((a = malloc(sizeof(AddressBookArray))))
+    {
+        a -> size = 0;
+        a -> telephones = NULL;
+        return a;
+    }
     return NULL;
 }
 
@@ -25,6 +32,13 @@ void freeAddressBookArray(AddressBookArray * array)
     /**
      * Free's all telephones within the array and the AddressBookArray itself.
      */
+
+    int i;
+    for (i = 0; i < array -> size; i++)
+    {
+        free(array -> telephones[i]); /* NOT SURE */
+    }
+    free(array);
 }
 
 Boolean addTelephone(AddressBookArray * array, char * telephone)
@@ -55,6 +69,16 @@ Boolean addTelephone(AddressBookArray * array, char * telephone)
      * array->size++;
      */
 
+    char * newTelephone;
+    if((newTelephone = malloc(TELEPHONE_LENGTH)))
+    { /* TODO - check if telephone already exists */
+        strcpy(newTelephone, telephone);
+        array->telephones = realloc(array->telephones,
+                         sizeof(*array->telephones) * (array->size + 1));
+        array->telephones[array->size] = newTelephone;
+        array->size++;
+        return TRUE;
+    }
     return FALSE;
 }
 
