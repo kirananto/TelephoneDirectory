@@ -34,6 +34,15 @@ void freeAddressBookList(AddressBookList * list)
      * 
      * Note the freeAddressBookNode(...) function is used to free a node.
      */
+
+    AddressBookNode *abn, *next;
+    abn = list -> head;
+    while(abn)
+    {
+        next = abn -> nextNode;
+        free (abn);
+        abn = next;
+    }
 }
 
 AddressBookNode * createAddressBookNode(int id, char * name)
@@ -72,6 +81,9 @@ void freeAddressBookNode(AddressBookNode * node)
     * 
     * Note the freeAddressBookArray(...) function is used to free the array.
     */
+
+    freeAddressBookArray(node -> array);
+    free(node);
 }
 
 Boolean insertNode(AddressBookList * list, AddressBookNode * node)

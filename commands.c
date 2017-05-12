@@ -77,7 +77,10 @@ AddressBookList * commandLoad(char * fileName)
 }
 
 void commandUnload(AddressBookList * list)
-{ }
+{
+    freeAddressBookList(list);
+    printf("Successfully Unloaded\n");
+}
 
 void commandDisplay(AddressBookList * list)
 { }

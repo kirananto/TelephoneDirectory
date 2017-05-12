@@ -61,6 +61,10 @@ int main(int argc, char ** argv)
             printf("%s\n",array_of_string[1]);
             a = commandLoad(array_of_string[1]);
         }
+        if(strcmp(array_of_string[0],COMMAND_UNLOAD)==0) {
+            printf("> Unloading from memory...\n");
+            commandUnload(a);
+        }
     } while(array_of_string[0] != NULL && strcmp(array_of_string[0],COMMAND_QUIT));
     printf("> Goodbye. \n\n");
     return EXIT_SUCCESS;
