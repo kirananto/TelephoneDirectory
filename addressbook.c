@@ -32,7 +32,7 @@ int main(int argc, char ** argv)
     do
     {
       printf("Enter your command : ");
-      scanf("%[^\n] ",msg);
+      scanf(" %[^\n]",msg);
 	string_num=0;
 	word_size=0;
 	msg_index=0;
