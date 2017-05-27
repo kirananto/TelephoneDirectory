@@ -82,7 +82,7 @@ void commandUnload(AddressBookList * list)
 
 void commandDisplay(AddressBookList * list)
 { 
-
+	
 }
 
 void commandForward(AddressBookList * list, int moves)

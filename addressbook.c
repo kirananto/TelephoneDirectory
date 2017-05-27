@@ -36,7 +36,7 @@ int main(int argc, char ** argv)
     do
     {
       printf("Enter your command : ");
-      scanf(" %[^\n]",msg);
+      scanf(" %100[^\n]",msg);
 	string_num=0;
 	word_size=0;
 	msg_index=0;
@@ -59,12 +59,16 @@ int main(int argc, char ** argv)
         if(strcmp(array_of_string[0],COMMAND_LOAD)==0) {
             printf("> Opening the file %s\n",array_of_string[1]);
             a = commandLoad(array_of_string[1]);
-        }
-        if(strcmp(array_of_string[0],COMMAND_UNLOAD)==0) {
+        }else if(strcmp(array_of_string[0],COMMAND_UNLOAD)==0) {
             printf("> Unloading from memory...\n");
             commandUnload(a);
-        }
-    } while(array_of_string[0] != NULL && strcmp(array_of_string[0],COMMAND_QUIT));
+        } else if(strcmp(array_of_string[0],COMMAND_DISPLAY)==0) {
+		commandDisplay(a);
+} 
+	else {
+		break;
+}
+    } while(msg != NULL && strcmp(array_of_string[0],COMMAND_QUIT));
     printf("> Goodbye. \n\n");
     return EXIT_SUCCESS;
 }
