@@ -14,7 +14,7 @@ int string_num = 0;
 int word_size = 0;
 int msg_index = 0;
 int x;
-AddressBookList *a;
+AddressBookList *a = NULL;
 int main(int argc, char ** argv)
 {
   /** ----------------------------Format-------------------------------
@@ -57,18 +57,26 @@ int main(int argc, char ** argv)
 	msg_index++;
     }
         array_of_string[string_num][word_size] = '\0';
-        if(strcmp(array_of_string[0],COMMAND_LOAD)==0) {
-            printf("> Opening the file %s\n",array_of_string[1]);
-            a = commandLoad(array_of_string[1]);
-        }else if(strcmp(array_of_string[0],COMMAND_UNLOAD)==0) {
+        if(strcmp(array_of_string[0],COMMAND_LOAD)==0)
+        {
+            if(a != NULL)
+                printf("> File already loaded in memory\n");
+            else
+            {
+                printf("> Opening the file %s\n",array_of_string[1]);
+                a = commandLoad(array_of_string[1]);
+            }
+        }
+        else if(strcmp(array_of_string[0],COMMAND_UNLOAD)==0)
+        {
             printf("> Unloading from memory...\n");
             commandUnload(a);
-        } else if(strcmp(array_of_string[0],COMMAND_DISPLAY)==0) {
-		commandDisplay(a);
-} 
-	else {
-		break;
-}
+            a = NULL; /* To empty list */
+        }
+        else if(strcmp(array_of_string[0],COMMAND_DISPLAY)==0)
+            commandDisplay(a);
+        else
+		  continue;
     } while(msg != NULL && strcmp(array_of_string[0],COMMAND_QUIT));
     printf("> Goodbye. \n\n");
     return EXIT_SUCCESS;
