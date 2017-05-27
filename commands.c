@@ -21,7 +21,7 @@ AddressBookList * commandLoad(char * fileName)
     {
         AddressBookList *abl;
         AddressBookNode *abn;
-	int count;
+	    int count = 0;
         if((abl = createAddressBookList()))
         {
             char parsedLine[MAX_LINE_LENGTH];
@@ -34,7 +34,7 @@ AddressBookList * commandLoad(char * fileName)
                     char *getId = strtok(parsedLine, ", ");
                     char *getName = strtok(NULL, ", ");
                     char *getTelephone[20];
-		    count++;
+		            count++;
                     i = 0;
                     while((getTelephone[i] = strtok(NULL, ", ")) != NULL)
                         i++;
@@ -68,14 +68,15 @@ AddressBookList * commandLoad(char * fileName)
 void commandUnload(AddressBookList * list)
 {
     freeAddressBookList(list);
+    list = NULL;
     printf("Successfully Unloaded\n");
 }
 
 void commandDisplay(AddressBookList * list)
 { 
 	
-        AddressBookNode *abn;
-	int i=1,j;
+    AddressBookNode *abn;
+	int i = 1, j;
 	printf("\n------------------------------------------------------");
 	printf("\n|  Pos  |  Serial  |  ID  |  Name  |  Telephones  |");
 	list -> current = list -> head; /* Printing all data from AddressBookList object */
