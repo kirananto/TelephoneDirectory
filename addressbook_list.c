@@ -213,5 +213,18 @@ AddressBookNode * findByName(AddressBookList * list, char * name)
     * and current remains unchanged.
     */
 
+    AddressBookNode *abn;
+    if(list == NULL)
+        return NULL;
+    else
+    {
+        abn = list -> head;
+        while(abn != NULL)
+        {
+            if(strcmp(name, abn -> name) == 0)
+                return abn;
+            abn = abn -> nextNode;
+        }
+    }
     return NULL;
 }

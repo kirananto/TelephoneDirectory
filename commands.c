@@ -169,7 +169,13 @@ void commandAdd(AddressBookList * list, char * telephone)
 }
 
 void commandFind(AddressBookList * list, char * name)
-{ }
+{
+    AddressBookNode *abn = findByName(list, name);
+    if(abn == NULL)
+        printf("\n> Entry not found");
+    else
+        list -> current = abn;
+}
 
 void commandDelete(AddressBookList * list)
 { }

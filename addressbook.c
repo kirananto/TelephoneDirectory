@@ -91,6 +91,8 @@ int main(int argc, char ** argv)
             commandAdd(a, array_of_string[1]);
         else if(strcmp(array_of_string[0],COMMAND_REMOVE)==0)
             commandRemove(a, array_of_string[1]);
+        else if(strcmp(array_of_string[0],COMMAND_FIND)==0)
+            commandFind(a, array_of_string[1]);
         else
 		  continue;
     } while(msg != NULL && strcmp(array_of_string[0],COMMAND_QUIT));
