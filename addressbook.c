@@ -40,7 +40,7 @@ int main(int argc, char ** argv)
 	string_num=0;
 	word_size=0;
 	msg_index=0;
-      while (msg[msg_index] != '\0') {
+    while (msg[msg_index] != '\0') {
         if (msg[msg_index] != ' ') {
             /* add the character to the proper place in array_of_string */
             array_of_string[string_num][word_size] = msg[msg_index];
@@ -56,6 +56,7 @@ int main(int argc, char ** argv)
         }
 	msg_index++;
     }
+        array_of_string[string_num][word_size] = '\0';
         if(strcmp(array_of_string[0],COMMAND_LOAD)==0) {
             printf("> Opening the file %s\n",array_of_string[1]);
             a = commandLoad(array_of_string[1]);
