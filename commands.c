@@ -91,7 +91,8 @@ void commandDisplay(AddressBookList * list)
         printf(" %8d | %6d | %10s | ",i, abn -> id, abn -> name);
         for(j = 0; j < (abn -> array -> size); j++)
             printf("%s, ", abn -> array -> telephones[j]); /* Print telephone numbers with commas */
-        printf("\b\b  "); /* Erase the last comma */
+        if(abn -> array -> size > 0)
+            printf("\b\b  "); /* Erase the last comma */
         abn = abn -> nextNode;
 		i++;
     }
@@ -117,10 +118,55 @@ void commandBackward(AddressBookList * list, int moves)
 }
 
 void commandInsert(AddressBookList * list, int id, char * name, char * telephone)
-{ }
+{
+    if(list == NULL)
+        printf("\n> File not loaded\n");
+    else
+    {
+        AddressBookNode *abn;
+        Boolean flag = TRUE;
+        int i;
+        if(id <= 0 || strlen(name) <= 0 || strlen(telephone) != TELEPHONE_LENGTH - 1)
+            flag = FALSE;
+        else
+            for(i = 0; i < TELEPHONE_LENGTH - 1; i++)
+                if(!isdigit(telephone[i]))
+                    flag = FALSE;
+        if(flag)
+        {
+            abn = createAddressBookNode(id, name);
+            addTelephone(abn -> array, telephone);
+            if(!insertNode(list, abn))
+                printf("\n> Entry with same ID already exists\n");
+        }
+        else
+            printf("\n> Invalid data entered\n");
+    }
+}
 
 void commandAdd(AddressBookList * list, char * telephone)
-{ }
+{
+    Boolean flag = TRUE;
+    int i;
+    if(list == NULL)
+        printf("\n> File not loaded\n");
+    else
+    {
+        if(strlen(telephone) != TELEPHONE_LENGTH - 1)
+            flag = FALSE;
+        else
+            for(i = 0; i < TELEPHONE_LENGTH - 1; i++)
+                if(!isdigit(telephone[i]))
+                    flag = FALSE;
+        if(flag)
+        {
+            if(!addTelephone(list -> current -> array, telephone))
+                printf("\n> Number already exists\n");
+        }
+        else
+            printf("\n> Wrong telephone number format\n");
+    }
+}
 
 void commandFind(AddressBookList * list, char * name)
 { }
@@ -129,7 +175,28 @@ void commandDelete(AddressBookList * list)
 { }
 
 void commandRemove(AddressBookList * list, char * telephone)
-{ }
+{
+    Boolean flag = TRUE;
+    int i;
+    if(list == NULL)
+        printf("\n> File not loaded\n");
+    else
+    {
+        if(strlen(telephone) != TELEPHONE_LENGTH - 1)
+            flag = FALSE;
+        else
+            for(i = 0; i < TELEPHONE_LENGTH - 1; i++)
+                if(!isdigit(telephone[i]))
+                    flag = FALSE;
+        if(flag)
+        {
+            if(!removeTelephone(list -> current -> array, telephone))
+                printf("\n> Number doesn't exist\n");
+        }
+        else
+            printf("\n> Wrong telephone number format\n");
+    }
+}
 
 void commandSort(
     AddressBookList * list,

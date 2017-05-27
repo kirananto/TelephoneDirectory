@@ -70,8 +70,15 @@ Boolean addTelephone(AddressBookArray * array, char * telephone)
      */
 
     char * newTelephone;
-    if((newTelephone = malloc(TELEPHONE_LENGTH)))
-    { /* TODO - check if telephone already exists */
+    Boolean flag = TRUE;
+    int i;
+    for (i = 0; i < array -> size; i++)
+    {
+        if(strcmp(array -> telephones[i], telephone) == 0)
+            flag = FALSE;
+    }
+    if((newTelephone = malloc(TELEPHONE_LENGTH)) && flag)
+    {
         strcpy(newTelephone, telephone);
         array->telephones = realloc(array->telephones,
                          sizeof(*array->telephones) * (array->size + 1));
@@ -110,6 +117,22 @@ Boolean removeTelephone(AddressBookArray * array, char * telephone)
     * array->telephones = NULL;
     */
 
+    int i;
+    for (i = 0; i < array -> size; i++)
+        if(strcmp(array -> telephones[i], telephone) == 0)
+        {
+            strcpy(array -> telephones[i], array -> telephones[(array -> size) - 1]);
+            free(array -> telephones[(array->size) - 1]);
+            array->telephones = realloc(array->telephones,
+                            sizeof(*array->telephones) * (array->size - 1));
+            array -> size--;
+            if(array->size == 0)
+            {
+                free(array->telephones);
+                array->telephones = NULL;
+            }
+            return TRUE;
+        }
     return FALSE;
 }
 
