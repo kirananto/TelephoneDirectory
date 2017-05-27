@@ -50,16 +50,7 @@ AddressBookList * commandLoad(char * fileName)
             }
             fclose(data);
             /* printf("\n\nFROM STRUCTURE OBJECT\n\n"); */
-            abl -> current = abl -> head; /* Printing all data from AddressBookList object */
-            while((abn = abl -> current))
-            {
-                /*printf("%d - %s\n", abn -> id, abn -> name);*/
-                for(j = 0; j < (abn -> array -> size) ; j++)
-                {
-                   /*printf(" - %s\n", abn -> array -> telephones[j]);*/
-                }
-                abl -> current = abl -> current -> nextNode;
-            }
+            
 	    printf("> %d Phone book entries have been loaded from the file \n",count);
             return abl;
         }
@@ -82,6 +73,26 @@ void commandUnload(AddressBookList * list)
 
 void commandDisplay(AddressBookList * list)
 { 
+	
+        AddressBookNode *abn;
+	int i=1,j;
+	printf("\n------------------------------------------------------");
+	printf("\n|  Pos  |  Serial  |  ID  |  Name  |  Telephones  |");
+	list -> current = list -> head; /* Printing all data from AddressBookList object */
+        while((abn = list -> current))
+            {
+                printf("\n|  CUR  |  %d      |  %d  |  %s   |",i, abn -> id, abn -> name);
+                for(j = 0; j < (abn -> array -> size) ; j++)
+                {
+                   printf(" %s,", abn -> array -> telephones[j]);
+                }
+                list -> current = list -> current -> nextNode;
+		i++;
+            }
+	printf("\n------------------------------------------------------");
+		printf("\n|\t Total no of book entries : %d\t|",i-1);
+	printf("\n------------------------------------------------------\n");
+	
 	
 }
 
