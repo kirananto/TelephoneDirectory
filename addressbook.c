@@ -58,7 +58,6 @@ int main(int argc, char ** argv)
     }
         if(strcmp(array_of_string[0],COMMAND_LOAD)==0) {
             printf("> Opening the file %s\n",array_of_string[1]);
-            printf("%s\n",array_of_string[1]);
             a = commandLoad(array_of_string[1]);
         }
         if(strcmp(array_of_string[0],COMMAND_UNLOAD)==0) {

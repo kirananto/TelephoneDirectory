@@ -21,6 +21,7 @@ AddressBookList * commandLoad(char * fileName)
     {
         AddressBookList *abl;
         AddressBookNode *abn;
+	int count;
         if((abl = createAddressBookList()))
         {
             char parsedLine[MAX_LINE_LENGTH];
@@ -33,14 +34,10 @@ AddressBookList * commandLoad(char * fileName)
                     char *getId = strtok(parsedLine, ", ");
                     char *getName = strtok(NULL, ", ");
                     char *getTelephone[20];
+		    count++;
                     i = 0;
                     while((getTelephone[i] = strtok(NULL, ", ")) != NULL)
                         i++;
-                    /* printf("%s - %s\n",getId,getName);
-                    for(j = 0; j <i ; j++)
-                    {
-                        printf(" - %s\n", getTelephone[j]);
-                    } */
                     if((abn = createAddressBookNode(atoi(getId), getName)))
                     {
                         for(j = 0; j <i ; j++)
@@ -56,13 +53,14 @@ AddressBookList * commandLoad(char * fileName)
             abl -> current = abl -> head; /* Printing all data from AddressBookList object */
             while((abn = abl -> current))
             {
-                printf("%d - %s\n", abn -> id, abn -> name);
+                /*printf("%d - %s\n", abn -> id, abn -> name);*/
                 for(j = 0; j < (abn -> array -> size) ; j++)
                 {
-                    printf(" - %s\n", abn -> array -> telephones[j]);
+                   /*printf(" - %s\n", abn -> array -> telephones[j]);*/
                 }
                 abl -> current = abl -> current -> nextNode;
             }
+	    printf("> %d Phone book entries have been loaded from the file \n",count);
             return abl;
         }
         fclose(data);
@@ -83,7 +81,9 @@ void commandUnload(AddressBookList * list)
 }
 
 void commandDisplay(AddressBookList * list)
-{ }
+{ 
+
+}
 
 void commandForward(AddressBookList * list, int moves)
 { }
