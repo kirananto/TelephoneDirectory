@@ -80,7 +80,7 @@ void commandDisplay(AddressBookList * list)
 	printf("\n-------------------------------------------------------");
 	printf("\n| Pos |  Serial  |   ID   |    Name    |  Telephones  |");
     printf("\n-------------------------------------------------------");
-	if(list) /* Printing all data from AddressBookList object */
+	if(list != NULL) /* Printing all data from AddressBookList object */
         abn = list -> head;
     while(abn != NULL)
     {
@@ -172,13 +172,16 @@ void commandFind(AddressBookList * list, char * name)
 {
     AddressBookNode *abn = findByName(list, name);
     if(abn == NULL)
-        printf("\n> Entry not found");
+        printf("\n> Entry not found\n");
     else
         list -> current = abn;
 }
 
 void commandDelete(AddressBookList * list)
-{ }
+{
+    if(!deleteCurrentNode(list))
+        printf("\n> File not Loaded");
+}
 
 void commandRemove(AddressBookList * list, char * telephone)
 {
