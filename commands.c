@@ -239,4 +239,29 @@ int compareID(const void * node, const void * otherNode)
 }
 
 void commandSave(AddressBookList * list, char * fileName)
-{ }
+{
+    FILE *data;
+    char line[50];
+    int i;
+    if(list == NULL)
+        printf("\n> File not loaded\n");
+    printf("> Opening file ... \n");
+    if((data = fopen(fileName, "w")))
+    {
+        AddressBookNode *abn = list -> head;
+        printf("> Writing to file ... \n");
+        while(abn != NULL)
+        {
+            sprintf(line, "%d,%s,", abn -> id, abn -> name);
+            for(i = 0; i < (abn -> array -> size); i++)
+            {
+                strcat(line, abn -> array -> telephones[i]);
+                strcat(line, ",");
+            }
+            line[strlen(line) - 1] = '\n';
+            fputs(line, data);
+            abn = abn -> nextNode;
+        }
+    }
+    fclose(data);
+}

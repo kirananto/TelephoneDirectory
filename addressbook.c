@@ -99,6 +99,8 @@ int main(int argc, char ** argv)
             if(a -> head == NULL)
                 a = NULL;
         }
+        else if(strcmp(array_of_string[0],COMMAND_SAVE)==0)
+            commandSave(a, array_of_string[1]);
         else
 		  continue;
     } while(msg != NULL && strcmp(array_of_string[0],COMMAND_QUIT));
