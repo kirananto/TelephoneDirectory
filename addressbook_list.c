@@ -136,6 +136,20 @@ Boolean forward(AddressBookList * list, int forward)
      * then FALSE is returned and current remains unchanged.
      */
 
+    AddressBookNode *abn = list -> current;
+    int i;
+    if(list == NULL)
+        return FALSE;
+    else
+    {
+        for (i = 0; i < forward; i++)
+            if(abn -> nextNode)
+                abn = abn -> nextNode;
+            else
+                return FALSE;
+        list -> current = abn;
+        return TRUE;
+    }
     return FALSE;
 }
 
@@ -149,6 +163,20 @@ Boolean backward(AddressBookList * list, int backward)
     * then FALSE is returned and current remains unchanged.
     */
 
+    AddressBookNode *abn = list -> current;
+    int i;
+    if(list == NULL)
+        return FALSE;
+    else
+    {
+        for (i = 0; i < backward; i++)
+            if(abn -> previousNode)
+                abn = abn -> previousNode;
+            else
+                return FALSE;
+        list -> current = abn;
+        return TRUE;
+    }
     return FALSE;
 }
 

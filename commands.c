@@ -76,7 +76,7 @@ void commandUnload(AddressBookList * list)
 void commandDisplay(AddressBookList * list)
 {
     AddressBookNode *abn = NULL;
-	int i = 0, j;
+	int i = 1, j;
 	printf("\n-------------------------------------------------------");
 	printf("\n| Pos |  Serial  |   ID   |    Name    |  Telephones  |");
     printf("\n-------------------------------------------------------");
@@ -96,15 +96,25 @@ void commandDisplay(AddressBookList * list)
 		i++;
     }
     printf("\n-------------------------------------------------------");
-    printf("\n|\t Total no of book entries : %4d\t      |", i);
+    printf("\n|\t Total no of book entries : %4d\t      |", i - 1);
     printf("\n-------------------------------------------------------\n\n");
 }
 
 void commandForward(AddressBookList * list, int moves)
-{ }
+{
+    if(list == NULL)
+        printf("\n> No file loaded\n");
+    else if(!forward(list, moves))
+        printf("\n> Can't forward out of bounds\n");
+}
 
 void commandBackward(AddressBookList * list, int moves)
-{ }
+{
+    if(list == NULL)
+        printf("\n> No file loaded\n");
+    else if(!backward(list, moves))
+        printf("\n> Can't backward out of bounds\n");
+}
 
 void commandInsert(AddressBookList * list, int id, char * name, char * telephone)
 { }
