@@ -117,6 +117,22 @@ Boolean removeTelephone(AddressBookArray * array, char * telephone)
     * array->telephones = NULL;
     */
 
+    int i;
+    for (i = 0; i < array -> size; i++)
+        if(strcmp(array -> telephones[i], telephone) == 0)
+        {
+            strcpy(array -> telephones[i], array -> telephones[(array -> size) - 1]);
+            free(array -> telephones[(array->size) - 1]);
+            array->telephones = realloc(array->telephones,
+                            sizeof(*array->telephones) * (array->size - 1));
+            array -> size--;
+            if(array->size == 0)
+            {
+                free(array->telephones);
+                array->telephones = NULL;
+            }
+            return TRUE;
+        }
     return FALSE;
 }
 
