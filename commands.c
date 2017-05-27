@@ -80,7 +80,7 @@ void commandDisplay(AddressBookList * list)
 	printf("\n-------------------------------------------------------");
 	printf("\n| Pos |  Serial  |   ID   |    Name    |  Telephones  |");
     printf("\n-------------------------------------------------------");
-	if(list) /* Printing all data from AddressBookList object */
+	if(list != NULL) /* Printing all data from AddressBookList object */
         abn = list -> head;
     while(abn != NULL)
     {
@@ -169,10 +169,19 @@ void commandAdd(AddressBookList * list, char * telephone)
 }
 
 void commandFind(AddressBookList * list, char * name)
-{ }
+{
+    AddressBookNode *abn = findByName(list, name);
+    if(abn == NULL)
+        printf("\n> Entry not found\n");
+    else
+        list -> current = abn;
+}
 
 void commandDelete(AddressBookList * list)
-{ }
+{
+    if(!deleteCurrentNode(list))
+        printf("\n> File not Loaded");
+}
 
 void commandRemove(AddressBookList * list, char * telephone)
 {
@@ -230,4 +239,29 @@ int compareID(const void * node, const void * otherNode)
 }
 
 void commandSave(AddressBookList * list, char * fileName)
-{ }
+{
+    FILE *data;
+    char line[50];
+    int i;
+    if(list == NULL)
+        printf("\n> File not loaded\n");
+    printf("> Opening file ... \n");
+    if((data = fopen(fileName, "w")))
+    {
+        AddressBookNode *abn = list -> head;
+        printf("> Writing to file ... \n");
+        while(abn != NULL)
+        {
+            sprintf(line, "%d,%s,", abn -> id, abn -> name);
+            for(i = 0; i < (abn -> array -> size); i++)
+            {
+                strcat(line, abn -> array -> telephones[i]);
+                strcat(line, ",");
+            }
+            line[strlen(line) - 1] = '\n';
+            fputs(line, data);
+            abn = abn -> nextNode;
+        }
+    }
+    fclose(data);
+}

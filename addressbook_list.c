@@ -37,12 +37,13 @@ void freeAddressBookList(AddressBookList * list)
 
     AddressBookNode *abn, *next;
     abn = list -> head;
-    while(abn)
+    while(abn != NULL)
     {
         next = abn -> nextNode;
-        free (abn);
+        freeAddressBookNode(abn);
         abn = next;
     }
+    free(list);
 }
 
 AddressBookNode * createAddressBookNode(int id, char * name)
@@ -122,6 +123,37 @@ Boolean deleteCurrentNode(AddressBookList * list)
      * then FALSE is returned.
      */
     
+    if(list != NULL)
+    {
+        if(list -> current == list -> head && list -> current == list -> tail)
+        {
+            freeAddressBookList(list);
+            list -> head = list -> tail = list -> current = NULL;
+        }
+        else if(list -> current == list -> head)
+        {
+            list -> current = list -> current -> nextNode;
+            freeAddressBookNode(list -> head);
+            list -> head = list -> current;
+            list -> head -> previousNode = NULL;
+        }
+        else if(list -> current == list -> tail)
+        {
+            list -> current = list -> current -> previousNode;
+            freeAddressBookNode(list -> tail);
+            list -> tail = list -> current;
+            list -> tail -> nextNode = NULL;
+        }
+        else
+        {
+            AddressBookNode *abn = list -> current;
+            list -> current -> previousNode -> nextNode = list -> current -> nextNode;
+            list -> current -> nextNode -> previousNode = list -> current -> previousNode;
+            list -> current = list -> current -> previousNode;
+            freeAddressBookNode(abn);
+        }
+        return TRUE;
+    }
     return FALSE;
 }
 
@@ -213,5 +245,18 @@ AddressBookNode * findByName(AddressBookList * list, char * name)
     * and current remains unchanged.
     */
 
+    AddressBookNode *abn;
+    if(list == NULL)
+        return NULL;
+    else
+    {
+        abn = list -> head;
+        while(abn != NULL)
+        {
+            if(strcmp(name, abn -> name) == 0)
+                return abn;
+            abn = abn -> nextNode;
+        }
+    }
     return NULL;
 }
