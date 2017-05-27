@@ -77,6 +77,16 @@ int main(int argc, char ** argv)
             commandForward(a, atoi(array_of_string[1]));
         else if(strcmp(array_of_string[0],COMMAND_BACKWARD)==0)
             commandBackward(a, atoi(array_of_string[1]));
+        else if(strcmp(array_of_string[0],COMMAND_INSERT)==0)
+        {
+            int id;
+            char *name, *telephone;
+            strtok(msg, " ");
+            id = atoi(strtok(NULL, ","));
+            name = strtok(NULL, ",");
+            telephone = strtok(NULL, "");
+            commandInsert(a, id, name, telephone);
+        }
         else
 		  continue;
     } while(msg != NULL && strcmp(array_of_string[0],COMMAND_QUIT));

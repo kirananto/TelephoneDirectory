@@ -95,14 +95,13 @@ Boolean insertNode(AddressBookList * list, AddressBookNode * node)
      * then FALSE is returned and the node is not inserted.
      */
 
-    /* TODO - Check if node with same id exists */
     if(list -> head == NULL)
     {
         list -> head = list -> tail = list -> current = node;
         node -> previousNode = node -> nextNode = NULL;
         return TRUE;
     }
-    else
+    else if(findByID(list, node -> id) == NULL)
     {
         list -> tail -> nextNode = node;
         node -> previousNode = list -> tail;
@@ -188,6 +187,19 @@ AddressBookNode * findByID(AddressBookList * list, int id)
      * If no node with a matching id exists then NULL is returned.
      */
 
+    AddressBookNode *abn;
+    if(list == NULL)
+        return NULL;
+    else
+    {
+        abn = list -> head;
+        while(abn != NULL)
+        {
+            if(abn -> id == id)
+                return abn;
+            abn = abn -> nextNode;
+        }
+    }
     return NULL;
 }
 

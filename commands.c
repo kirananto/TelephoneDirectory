@@ -117,7 +117,31 @@ void commandBackward(AddressBookList * list, int moves)
 }
 
 void commandInsert(AddressBookList * list, int id, char * name, char * telephone)
-{ }
+{
+    if(list == NULL)
+        printf("\n> File not loaded\n");
+    else
+    {
+        AddressBookNode *abn;
+        Boolean flag = TRUE;
+        int i;
+        if(id <= 0 || strlen(name) <= 0 || strlen(telephone) != TELEPHONE_LENGTH - 1)
+            flag = FALSE;
+        else
+            for(i = 0; i < TELEPHONE_LENGTH - 1; i++)
+                if(!isdigit(telephone[i]))
+                    flag = FALSE;
+        if(flag)
+        {
+            abn = createAddressBookNode(id, name);
+            addTelephone(abn -> array, telephone);
+            if(!insertNode(list, abn))
+                printf("\n> Entry with same ID already exists\n");
+        }
+        else
+            printf("\n> Invalid data entered\n");
+    }
+}
 
 void commandAdd(AddressBookList * list, char * telephone)
 { }
