@@ -144,7 +144,28 @@ void commandInsert(AddressBookList * list, int id, char * name, char * telephone
 }
 
 void commandAdd(AddressBookList * list, char * telephone)
-{ }
+{
+    Boolean flag = TRUE;
+    int i;
+    if(list == NULL)
+        printf("\n> File not loaded\n-------------------------------------------------------");
+    else
+    {
+        if(strlen(telephone) != TELEPHONE_LENGTH - 1)
+            flag = FALSE;
+        else
+            for(i = 0; i < TELEPHONE_LENGTH - 1; i++)
+                if(!isdigit(telephone[i]))
+                    flag = FALSE;
+        if(flag)
+        {
+            if(!addTelephone(list -> current -> array, telephone))
+                printf("\n> Number already exists\n");
+        }
+        else
+            printf("\n> Wrong telephone number format\n");
+    }
+}
 
 void commandFind(AddressBookList * list, char * name)
 { }

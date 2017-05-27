@@ -87,6 +87,10 @@ int main(int argc, char ** argv)
             telephone = strtok(NULL, "");
             commandInsert(a, id, name, telephone);
         }
+        else if(strcmp(array_of_string[0],COMMAND_ADD)==0)
+            commandAdd(a, array_of_string[1]);
+        else if(strcmp(array_of_string[0],COMMAND_REMOVE)==0)
+            commandRemove(a, array_of_string[1]);
         else
 		  continue;
     } while(msg != NULL && strcmp(array_of_string[0],COMMAND_QUIT));
