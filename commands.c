@@ -21,12 +21,14 @@ AddressBookList * commandLoad(char * fileName)
     {
         AddressBookList *abl;
         AddressBookNode *abn;
-	int count;
+        int count = 0;
         if((abl = createAddressBookList()))
         {
             char parsedLine[MAX_LINE_LENGTH];
             while (fgets(parsedLine, MAX_LINE_LENGTH, data) != NULL)
             {
+                if(parsedLine[strlen(parsedLine) - 1] == '\n') /* To remove '\n' character from string */
+                    parsedLine[strlen(parsedLine) - 1] = '\0';
                 if(parsedLine[0]=='#')
                     continue;
                 else
@@ -34,7 +36,7 @@ AddressBookList * commandLoad(char * fileName)
                     char *getId = strtok(parsedLine, ", ");
                     char *getName = strtok(NULL, ", ");
                     char *getTelephone[20];
-		    count++;
+                    count++;
                     i = 0;
                     while((getTelephone[i] = strtok(NULL, ", ")) != NULL)
                         i++;
@@ -72,35 +74,47 @@ void commandUnload(AddressBookList * list)
 }
 
 void commandDisplay(AddressBookList * list)
-{ 
-	
-        AddressBookNode *abn;
-	int i=1,j;
-	printf("\n------------------------------------------------------");
-	printf("\n|  Pos  |  Serial  |  ID  |  Name  |  Telephones  |");
-	list -> current = list -> head; /* Printing all data from AddressBookList object */
-        while((abn = list -> current))
-            {
-                printf("\n|  CUR  |  %d      |  %d  |  %s   |",i, abn -> id, abn -> name);
-                for(j = 0; j < (abn -> array -> size) ; j++)
-                {
-                   printf(" %s,", abn -> array -> telephones[j]);
-                }
-                list -> current = list -> current -> nextNode;
+{
+    AddressBookNode *abn = NULL;
+	int i = 1, j;
+	printf("\n-------------------------------------------------------");
+	printf("\n| Pos |  Serial  |   ID   |    Name    |  Telephones  |");
+    printf("\n-------------------------------------------------------");
+	if(list) /* Printing all data from AddressBookList object */
+        abn = list -> head;
+    while(abn != NULL)
+    {
+        if(abn == list -> current)
+            printf("\n| CUR |");
+        else
+            printf("\n|     |");  
+        printf(" %8d | %6d | %10s | ",i, abn -> id, abn -> name);
+        for(j = 0; j < (abn -> array -> size); j++)
+            printf("%s, ", abn -> array -> telephones[j]); /* Print telephone numbers with commas */
+        printf("\b\b  "); /* Erase the last comma */
+        abn = abn -> nextNode;
 		i++;
-            }
-	printf("\n------------------------------------------------------");
-		printf("\n|\t Total no of book entries : %d\t|",i-1);
-	printf("\n------------------------------------------------------\n");
-	
-	
+    }
+    printf("\n-------------------------------------------------------");
+    printf("\n|\t Total no of book entries : %4d\t      |", i - 1);
+    printf("\n-------------------------------------------------------\n\n");
 }
 
 void commandForward(AddressBookList * list, int moves)
-{ }
+{
+    if(list == NULL)
+        printf("\n> No file loaded\n");
+    else if(!forward(list, moves))
+        printf("\n> Can't forward out of bounds\n");
+}
 
 void commandBackward(AddressBookList * list, int moves)
-{ }
+{
+    if(list == NULL)
+        printf("\n> No file loaded\n");
+    else if(!backward(list, moves))
+        printf("\n> Can't backward out of bounds\n");
+}
 
 void commandInsert(AddressBookList * list, int id, char * name, char * telephone)
 { }
